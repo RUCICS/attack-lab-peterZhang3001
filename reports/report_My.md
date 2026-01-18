@@ -24,8 +24,8 @@ func里，程序栈是：
 
 知道buffer占8个B，旧rbp也占8B，所以padding16个char（A），然后小端法写func1的开始地址，就能覆盖原来的返回地址。
 
-- **解决方案**：![alt text](p1_py.png)
-- **结果**：![alt text](p1p2.png)
+- **解决方案**：![alt text](img/p1_py.png)
+- **结果**：![alt text](img/p1p2.png)
 
 ### Problem 2:
 - **分析**：
@@ -40,7 +40,7 @@ pop指令是一个解决（1）的好方法，所以pop加ret构成了我们需�
 
 所以，在padding后先接这个gadget的起始地址（func的ret“错误”跳到这里），然后接key值（0x3f8）（pop赋给rdi），然后接func1的起始地址（gadget的ret“错误”跳到这里）
 
-- **解决方案**：![alt text](p2_py.png)
+- **解决方案**：![alt text](img/p2_py.png)
 - **结果**：见p1
 
 ### Problem 3: 
@@ -95,7 +95,7 @@ for i in range(len(data)-1):
   print("wrote ans3.txt")
   ```
 
-- **结果**：![alt text](p3.png)
+- **结果**：![alt text](img/p3.png)
 
 ### Problem 4: 
 - **分析**：
@@ -103,7 +103,7 @@ for i in range(len(data)-1):
 main函数中存在对金丝雀的模拟，前面两段看似无用的对话其实是以一个随机字符串覆盖输入字符串的前部分，如果输入字符串试图溢出，caesar_decrypt检测就通不过。
 
 - **解决方案**：p4是屏幕输入输出，在前两个对话输一些合法的糊弄糊弄，第三个对话要输一个“钱数”，这是一个利用高层语言逻辑漏洞而不是栈溢出的攻击：-1被解读为无符号极大值，并且好像只有-1能过，因为-1的无符号解释是最大的。
-- **结果**：![alt text](p4.png)
+- **结果**：![alt text](img/p4.png)
 
 ## 思考与总结
 
